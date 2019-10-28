@@ -4900,4 +4900,4 @@ MonoBehaviour:
   minThrowAngle: 20
   maxThrowAngle: 20
   minThrowSpeed: 15
-  maxThrowSpeed: 20
+  maxThrowSpeed: 15

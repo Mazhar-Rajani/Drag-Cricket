@@ -105,7 +105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3c2c561afb4834ebb427e512199634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timing: 0.4
+  timing_Easy: 0.4
+  timing_Difficult: 0.2
 --- !u!1 &795389977
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,7 +212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3c2c561afb4834ebb427e512199634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timing: 1
+  timing_Easy: 1
+  timing_Difficult: 0.8
 --- !u!1 &1608044745
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +319,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3c2c561afb4834ebb427e512199634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timing: 0.6
+  timing_Easy: 0.6
+  timing_Difficult: 0.4
 --- !u!1 &1639620473
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,7 +426,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3c2c561afb4834ebb427e512199634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timing: 0.8
+  timing_Easy: 0.8
+  timing_Difficult: 0.6
 --- !u!1 &2524744794223731557
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,7 +533,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3c2c561afb4834ebb427e512199634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timing: 1.2
+  timing_Easy: 1.2
+  timing_Difficult: 1
 --- !u!1 &2524744794608650183
 GameObject:
   m_ObjectHideFlags: 0
@@ -686,11 +691,11 @@ MonoBehaviour:
   ballCollider: {fileID: 0}
   ballRigidbody: {fileID: 0}
   mainCamera: {fileID: 0}
-  maxRotation: {x: 90, y: 90}
+  maxRotation: {x: 75, y: 75}
   dragSmoothness: {x: 0.1, y: 0.1}
   ballMaxHeight: 10
   swingSpeed: 25
-  ballHitForce: 40
+  ballHitForce: 30
 --- !u!65 &2524744795960949719
 BoxCollider:
   m_ObjectHideFlags: 0

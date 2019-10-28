@@ -121,8 +121,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
   ballRigidbody: {fileID: 0}
-  minSwingForce: {x: 50, y: 150, z: 150}
-  maxSwingForce: {x: 200, y: 150, z: 150}
+  minSwingForce: {x: 150, y: 150, z: 150}
+  maxSwingForce: {x: 150, y: 150, z: 150}
 --- !u!1 &6102317412247273609
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 6102317412247273609}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.01, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 1}
   m_Children: []
   m_Father: {fileID: 1285071345081109869}
   m_RootOrder: 0

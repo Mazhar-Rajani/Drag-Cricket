@@ -140,7 +140,7 @@ public class Controller_Bat : MonoBehaviour
             }
 
             ballRigidbody.velocity = Vector3.zero;
-            float timing = collision.GetContact(0).thisCollider.GetComponent<ColliderStrength>().Timing;
+            float timing = collision.GetContact(0).thisCollider.GetComponent<ColliderStrength>().Timing_Easy;
             Vector3 hitForce = transform.forward * ((ballHitForce * timing));
             hitForce.y = Mathf.Clamp(hitForce.y, -ballMaxHeight, ballMaxHeight) * timing;
             Debug.Log("Hit Force" + hitForce);
