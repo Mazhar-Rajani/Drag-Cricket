@@ -2,6 +2,6 @@
 
 public class ColliderStrength : MonoBehaviour
 {
-    [SerializeField] private float hitForce = default;
-    public float HitForce => hitForce;
+    [SerializeField] private float timing = default;
+    public float Timing => timing;
 }

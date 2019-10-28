@@ -4882,7 +4882,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.09
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1710364271986953846
 MonoBehaviour:
@@ -4897,6 +4897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pitchCollider: {fileID: 0}
-  minThrowAngle: 15
-  maxThrowAngle: 35
-  throwSpeed: 15
+  minThrowAngle: 20
+  maxThrowAngle: 20
+  minThrowSpeed: 15
+  maxThrowSpeed: 20

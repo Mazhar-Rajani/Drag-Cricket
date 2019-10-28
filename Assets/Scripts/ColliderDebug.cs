@@ -5,6 +5,6 @@ public class ColliderDebug : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, transform.localScale);
+        Gizmos.DrawWireCube(transform.position, transform.lossyScale);
     }
 }

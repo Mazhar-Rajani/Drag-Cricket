@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Controller_Bat : MonoBehaviour
 {
@@ -8,15 +7,16 @@ public class Controller_Bat : MonoBehaviour
     public static event System.Action<Vector3> OnShotPlayed_Point;
 
     [SerializeField] private GameObject arrowIndicator = default;
-    [SerializeField] private Collider batCollider = default;
+    [SerializeField] private Collider[] batColliders = default;
     [SerializeField] private Controller_Ball ball = default;
     [SerializeField] private Collider ballCollider = default;
     [SerializeField] private Rigidbody ballRigidbody = default;
     [SerializeField] private Camera mainCamera = default;
     [SerializeField] private Vector2 maxRotation = default;
+    [SerializeField] private Vector2 dragSmoothness = default;
+    [SerializeField] private float ballMaxHeight = default;
     [SerializeField] private float swingSpeed = default;
     [SerializeField] private float ballHitForce = default;
-    [SerializeField] private Vector2 dragSmoothness = default;
 
     private Rigidbody rb;
     private Quaternion originalRotation;
@@ -64,8 +64,11 @@ public class Controller_Bat : MonoBehaviour
         transform.position = originalPosition;
         transform.rotation = originalRotation;
         dragRotation = Vector3.zero;
-        batCollider.enabled = true;
         arrowIndicator.SetActive(true);
+        for (int i = 0; i < batColliders.Length; i++)
+        {
+            batColliders[i].enabled = true;
+        }
     }
 
     private void OnMouseDown()
@@ -76,6 +79,8 @@ public class Controller_Bat : MonoBehaviour
             new Vector3(Input.mousePosition.x, Input.mousePosition.y, distanceFromCamera));
 
         isPressed = true;
+
+        StartCoroutine(ball.Throw(2));
     }
 
     private void OnMouseDrag()
@@ -128,8 +133,20 @@ public class Controller_Bat : MonoBehaviour
 
         if (isBatReleased)
         {
-            batCollider.enabled = false;
-            ballRigidbody.velocity = transform.forward * (ballHitForce * dragDistance.magnitude);
+            isBatReleased = false;
+            for (int i = 0; i < batColliders.Length; i++)
+            {
+                batColliders[i].enabled = false;
+            }
+
+            ballRigidbody.velocity = Vector3.zero;
+            float timing = collision.GetContact(0).thisCollider.GetComponent<ColliderStrength>().Timing;
+            Vector3 hitForce = transform.forward * ((ballHitForce * timing));
+            hitForce.y = Mathf.Clamp(hitForce.y, -ballMaxHeight, ballMaxHeight) * timing;
+            Debug.Log("Hit Force" + hitForce);
+            Debug.Log("Timing " + collision.GetContact(0).thisCollider.name + " - " + timing);
+            ballRigidbody.AddForce(hitForce, ForceMode.Impulse);
+
             OnShotPlayed?.Invoke();
             OnShotPlayed_Point?.Invoke(collision.GetContact(0).point);
         }
