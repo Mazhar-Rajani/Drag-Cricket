@@ -19,14 +19,14 @@ public class CameraLook : MonoBehaviour
 
     private void OnEnable()
     {
-        Controller_Bat.OnShotPlayed += LookAtBall;
-        Controller_Ball.OnBallReset += ResetCamera;
+        Bat.OnShotPlayed += LookAtBall;
+        Ball.OnBallReset += ResetCamera;
     }
 
     private void OnDisable()
     {
-        Controller_Bat.OnShotPlayed -= LookAtBall;
-        Controller_Ball.OnBallReset -= ResetCamera;
+        Bat.OnShotPlayed -= LookAtBall;
+        Ball.OnBallReset -= ResetCamera;
     }
 
     private void Update()

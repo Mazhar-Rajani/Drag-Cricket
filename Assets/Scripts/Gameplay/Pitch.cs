@@ -2,7 +2,7 @@
 
 public class Pitch : MonoBehaviour
 {
-    [SerializeField] private Controller_Ball ball = default;
+    [SerializeField] private Ball ball = default;
     [SerializeField] private Rigidbody ballRigidbody = default;
     [SerializeField] private Vector3 minSwingForce = default;
     [SerializeField] private Vector3 maxSwingForce = default;

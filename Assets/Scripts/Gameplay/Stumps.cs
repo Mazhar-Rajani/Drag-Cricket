@@ -16,12 +16,12 @@ public class Stumps : MonoBehaviour
 
     private void OnEnable()
     {
-        Controller_Ball.OnBallReset += ResetStumps;
+        Ball.OnBallReset += ResetStumps;
     }
 
     private void OnDisable()
     {
-        Controller_Ball.OnBallReset -= ResetStumps;
+        Ball.OnBallReset -= ResetStumps;
     }
 
     private void ResetStumps()

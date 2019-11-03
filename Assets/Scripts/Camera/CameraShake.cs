@@ -16,12 +16,12 @@ public class CameraShake : MonoBehaviour
 
     void OnEnable()
     {
-        Controller_Bat.OnShotPlayed += ShakeCamera;
+        Bat.OnShotPlayed += ShakeCamera;
     }
 
     private void OnDisable()
     {
-        Controller_Bat.OnShotPlayed -= ShakeCamera;
+        Bat.OnShotPlayed -= ShakeCamera;
     }
 
     void Update()
