@@ -8,6 +8,7 @@ public class Bat : MonoBehaviour
     public static event System.Action OnBoundaryScored;
     public static event System.Action<int> OnRunsScored;
 
+    [SerializeField] private Vector3 centerOfMass = default;
     [SerializeField] private Collider dragCollider = default;
     [SerializeField] private Collider[] batColliders = default;
     [SerializeField] private GameObject arrowIndicator = default;
@@ -31,6 +32,8 @@ public class Bat : MonoBehaviour
     private Vector3 invertedRotation;
     private Vector2 offsetMousePos;
     private Vector2 dragDistance;
+    private Vector3 ballVelocityBeforeHit;
+    private Vector3 batVelocityBeforeHit;
     private bool isPressed;
     private bool canSwing;
     private bool isBatReleased;
@@ -43,6 +46,7 @@ public class Bat : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        rb.centerOfMass = centerOfMass;
         originalPosition = transform.position;
         originalRotation = transform.rotation;
         initialBallPosition = ball.transform.position;
@@ -50,17 +54,19 @@ public class Bat : MonoBehaviour
         startTime = Time.time;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (!canSwing)
-            return;
+        ballVelocityBeforeHit = ballRigidbody.velocity;
+        batVelocityBeforeHit = rb.velocity;
 
-        SwingBat();
+        if (canSwing)
+            SwingBat();
     }
 
     private IEnumerator ResetBat(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
+        rb.isKinematic = true;
         isPressed = false;
         canSwing = false;
         isBatReleased = false;
@@ -73,6 +79,7 @@ public class Bat : MonoBehaviour
         {
             batColliders[i].enabled = true;
         }
+        rb.isKinematic = false;
     }
 
     private void OnMouseDown()
@@ -127,8 +134,11 @@ public class Bat : MonoBehaviour
 
     private void SwingBat()
     {
-        rb.MoveRotation(Quaternion.Lerp(
-            transform.rotation, Quaternion.Euler(invertedRotation), Time.deltaTime * swingSpeed));
+        //rb.MoveRotation(Quaternion.Lerp(
+        //    transform.rotation, Quaternion.Euler(invertedRotation), Time.deltaTime * swingSpeed));
+
+        rb.isKinematic = false;
+        rb.AddTorque(-transform.right * swingSpeed, ForceMode.VelocityChange);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -146,14 +156,28 @@ public class Bat : MonoBehaviour
 
             ballRigidbody.velocity = Vector3.zero;
             float timing = collision.GetContact(0).thisCollider.GetComponent<ColliderStrength>().Timing_Easy;
-            Vector3 hitForce = transform.forward * ((ballHitForce * timing));
-            hitForce.y = Mathf.Clamp(hitForce.y, -ballMaxHeight, ballMaxHeight) * timing;
+
+            Debug.Log("M1.V1 Before - " + ballRigidbody.mass * ballVelocityBeforeHit);
+            Debug.Log("M2.V2 Before - " + rb.mass * batVelocityBeforeHit);
+            Debug.Log("M2.V2 After - " + rb.mass * rb.velocity);
+            Vector3 c = ((ballRigidbody.mass * ballVelocityBeforeHit) + (rb.mass * batVelocityBeforeHit) - (rb.mass * rb.velocity));
+            Debug.Log("C - " + c);
+            Vector3 hitForce = c / ballRigidbody.mass;
+            hitForce = new Vector3(hitForce.x, -hitForce.normalized.y * ((ballHitForce * timing)), -hitForce.normalized.z * ((ballHitForce * timing)));
+            //hitForce.y = Mathf.Clamp(hitForce.y, -ballMaxHeight, ballMaxHeight) * timing;
+            Debug.Log(transform.forward);
             Debug.Log("Hit Force" + hitForce);
             Debug.Log("Timing " + collision.GetContact(0).thisCollider.name + " - " + timing);
-            ballRigidbody.AddForce(hitForce, ForceMode.Impulse);
+            ballRigidbody.AddForce(-hitForce, ForceMode.Impulse);
 
             OnShotPlayed?.Invoke();
             OnShotPlayed_Point?.Invoke(collision.GetContact(0).point);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + transform.rotation * centerOfMass, 0.1f);
     }
 }

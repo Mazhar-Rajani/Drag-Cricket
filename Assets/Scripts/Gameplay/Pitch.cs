@@ -4,8 +4,7 @@ public class Pitch : MonoBehaviour
 {
     [SerializeField] private Ball ball = default;
     [SerializeField] private Rigidbody ballRigidbody = default;
-    [SerializeField] private Vector3 minSwingForce = default;
-    [SerializeField] private Vector3 maxSwingForce = default;
+    [SerializeField] private int[] swingForces = default;
 
     private Collider pithcCollider;
 
@@ -19,17 +18,17 @@ public class Pitch : MonoBehaviour
         if (collision.rigidbody != ballRigidbody)
             return;
 
-        float xSwing = Random.Range(minSwingForce.x, maxSwingForce.x);
-        float ySwing = Random.Range(minSwingForce.y, maxSwingForce.y);
-        float zSwing = Random.Range(minSwingForce.z, maxSwingForce.z);
+        int randomSwingIndex = Random.Range(0, swingForces.Length);
+        int swing = swingForces[randomSwingIndex];
+        Debug.Log("Random Swing Is  - " + swing);
 
         if (ball.transform.position.x > 0)
         {
-            ballRigidbody.AddForce(new Vector3(-xSwing, -ySwing, -zSwing), ForceMode.Force);
+            ballRigidbody.AddForce(new Vector3(-swing, -swing, -swing), ForceMode.Force);
         }
         else if (ball.transform.position.x < 0)
         {
-            ballRigidbody.AddForce(new Vector3(xSwing, -ySwing, -zSwing), ForceMode.Force);
+            ballRigidbody.AddForce(new Vector3(swing, -swing, -swing), ForceMode.Force);
         }
         pithcCollider.enabled = false;
     }

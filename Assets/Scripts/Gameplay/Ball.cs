@@ -8,8 +8,7 @@ public class Ball : MonoBehaviour
     [SerializeField] private Collider pitchCollider = default;
     [SerializeField] private float minThrowAngle = default;
     [SerializeField] private float maxThrowAngle = default;
-    [SerializeField] private float minThrowSpeed = default;
-    [SerializeField] private float maxThrowSpeed = default;
+    [SerializeField] private int[] throwSpeeds = default;
     
     private Rigidbody rb;
     private Collider ballCollider;
@@ -41,6 +40,7 @@ public class Ball : MonoBehaviour
     private void ResetBall()
     {
         pitchCollider.enabled = true;
+        //rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
         rb.isKinematic = true;
         int r = Random.Range(0, xPos.Length);
         transform.position = new Vector3(xPos[r], originalPosition.y, originalPosition.z);
@@ -53,9 +53,13 @@ public class Ball : MonoBehaviour
     private void ThrowBall()
     {
         rb.isKinematic = false;
+        //rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         float angleInRadians = Random.Range(minThrowAngle, maxThrowAngle) * Mathf.Deg2Rad;
         Vector3 throwDirection = new Vector3(0, Mathf.Sin(angleInRadians), Mathf.Cos(angleInRadians));
-        Vector3 throwForce = -throwDirection * Random.Range(minThrowSpeed, maxThrowSpeed);
+        int randomSpeedIndex = Random.Range(0, throwSpeeds.Length);
+        int randomSpeed = throwSpeeds[randomSpeedIndex];
+        Debug.Log("Random Speed Is  - " + randomSpeed);
+        Vector3 throwForce = -throwDirection * randomSpeed;
         rb.AddForce(throwForce, ForceMode.Impulse);
         StartCoroutine(Reset(5));
     }

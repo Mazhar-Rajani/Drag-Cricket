@@ -4848,7 +4848,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 1
-  m_Interpolate: 2
+  m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 3
 --- !u!135 &6561241023505655090
@@ -4879,5 +4879,4 @@ MonoBehaviour:
   pitchCollider: {fileID: 0}
   minThrowAngle: 20
   maxThrowAngle: 20
-  minThrowSpeed: 15
-  maxThrowSpeed: 15
+  throwSpeeds: 0f00000014000000190000001e000000

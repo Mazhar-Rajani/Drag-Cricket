@@ -107,5 +107,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
   ballRigidbody: {fileID: 0}
-  minSwingForce: {x: 150, y: 150, z: 150}
-  maxSwingForce: {x: 150, y: 150, z: 150}
+  swingForces: 320000006400000096000000af000000

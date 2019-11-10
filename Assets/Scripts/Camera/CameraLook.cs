@@ -29,7 +29,7 @@ public class CameraLook : MonoBehaviour
         Ball.OnBallReset -= ResetCamera;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (canFollowBall)
         {
