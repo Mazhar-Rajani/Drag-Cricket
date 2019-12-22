@@ -1,66 +1,83 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    public static event System.Action OnBallThrow;
+    public static event System.Action OnThrowReset;
     public static event System.Action OnBallReset;
 
-    [SerializeField] private Collider pitchCollider = default;
-    [SerializeField] private float minThrowAngle = default;
-    [SerializeField] private float maxThrowAngle = default;
-    [SerializeField] private int[] throwSpeeds = default;
-    
-    private Rigidbody rb;
-    private Collider ballCollider;
+    [SerializeField] private BallTrajectory ballTrajectory = default;
+    [SerializeField] private float ballThrowSpeed = default;
+    [SerializeField] private float ballBounceSpeed = default;
+
+    private Rigidbody ballRigidbody;
     private Vector3 originalPosition;
     private Quaternion originalRotation;
-    private int[] xPos = { 1, -1 };
+    private bool canThrowBall;
+    private float moveProgress;
+    private float bounceProgress;
+    private Vector3 ballPos;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        ballCollider = GetComponent<Collider>();
-        originalPosition = transform.position;
-        originalRotation = transform.rotation;
-        StartCoroutine(Reset(2));
-    }
-
-    public IEnumerator Throw(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        ThrowBall();
-    }
-
-    public IEnumerator Reset(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
+        StoreDefaultBallProperties();
+        ResetThrow();
         ResetBall();
     }
 
-    private void ResetBall()
+    private void FixedUpdate()
     {
-        pitchCollider.enabled = true;
-        //rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-        rb.isKinematic = true;
-        int r = Random.Range(0, xPos.Length);
-        transform.position = new Vector3(xPos[r], originalPosition.y, originalPosition.z);
+        MoveBall();
+    }
+
+    private void StoreDefaultBallProperties()
+    {
+        ballRigidbody = GetComponent<Rigidbody>();
+        originalPosition = ballTrajectory.Point0;
+        originalRotation = transform.rotation;
+    }
+
+    public void ThrowBall()
+    {
+        canThrowBall = true;
+        OnBallThrow?.Invoke();
+    }
+
+    public void ResetThrow()
+    {
+        canThrowBall = false;
+        moveProgress = 0;
+        bounceProgress = 0;
+        ballRigidbody.velocity = Vector3.zero;
+        ballRigidbody.angularVelocity = Vector3.zero;
+        OnThrowReset?.Invoke();
+    }
+
+    public void ResetBall()
+    {
+        transform.position = ballTrajectory.Point0;
         transform.rotation = originalRotation;
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
         OnBallReset?.Invoke();
     }
 
-    private void ThrowBall()
+    private void MoveBall()
     {
-        rb.isKinematic = false;
-        //rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        float angleInRadians = Random.Range(minThrowAngle, maxThrowAngle) * Mathf.Deg2Rad;
-        Vector3 throwDirection = new Vector3(0, Mathf.Sin(angleInRadians), Mathf.Cos(angleInRadians));
-        int randomSpeedIndex = Random.Range(0, throwSpeeds.Length);
-        int randomSpeed = throwSpeeds[randomSpeedIndex];
-        Debug.Log("Random Speed Is  - " + randomSpeed);
-        Vector3 throwForce = -throwDirection * randomSpeed;
-        rb.AddForce(throwForce, ForceMode.Impulse);
-        StartCoroutine(Reset(5));
+        if (!canThrowBall)
+            return;
+
+        if (moveProgress < 1)
+        {
+            moveProgress += ballThrowSpeed * Time.deltaTime;
+            moveProgress = Mathf.Clamp01(moveProgress);
+            ballPos = Vector3.Lerp(ballTrajectory.Point0, ballTrajectory.Point1, moveProgress);
+        }
+        else
+        {
+            bounceProgress += ballBounceSpeed * Time.deltaTime;
+            bounceProgress = Mathf.Clamp01(bounceProgress);
+            ballPos = Vector3.Lerp(ballTrajectory.Point1, ballTrajectory.Point2, bounceProgress);
+        }
+
+        ballRigidbody.MovePosition(ballPos);
     }
 }

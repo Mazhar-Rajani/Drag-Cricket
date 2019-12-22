@@ -91,7 +91,7 @@ public class Bat : MonoBehaviour
 
         isPressed = true;
 
-        StartCoroutine(ball.Throw(2));
+        //StartCoroutine(ball.Throw(2));
     }
 
     private void OnMouseDrag()
@@ -134,11 +134,11 @@ public class Bat : MonoBehaviour
 
     private void SwingBat()
     {
-        //rb.MoveRotation(Quaternion.Lerp(
-        //    transform.rotation, Quaternion.Euler(invertedRotation), Time.deltaTime * swingSpeed));
+        rb.MoveRotation(Quaternion.Lerp(
+            transform.rotation, Quaternion.Euler(invertedRotation), Time.deltaTime * swingSpeed));
 
-        rb.isKinematic = false;
-        rb.AddTorque(-transform.right * swingSpeed, ForceMode.VelocityChange);
+        //rb.isKinematic = false;
+        //rb.AddTorque(-transform.right * swingSpeed, ForceMode.VelocityChange);
     }
 
     private void OnCollisionEnter(Collision collision)
