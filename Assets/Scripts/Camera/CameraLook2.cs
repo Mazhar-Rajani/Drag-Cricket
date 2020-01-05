@@ -69,7 +69,7 @@ public class CameraLook2 : MonoBehaviour
         canResetCamera = true;
     }
 
-    private void FollowBall()
+    private void FollowBall(Vector3 hitPoint)
     {
         progress = 0;
         zoomProgress = 0;

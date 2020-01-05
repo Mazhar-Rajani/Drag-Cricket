@@ -56,6 +56,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -105,8 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3c2c561afb4834ebb427e512199634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timing_Easy: 0.6
-  timing_Difficult: 0.6
+  timing: 0.6
 --- !u!1 &1064424309076734934
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,6 +163,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -212,8 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3c2c561afb4834ebb427e512199634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timing_Easy: 0.3
-  timing_Difficult: 0.6
+  timing: 0.3
 --- !u!1 &1064424310114712678
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,6 +270,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -319,8 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3c2c561afb4834ebb427e512199634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timing_Easy: 0.2
-  timing_Difficult: 0.4
+  timing: 0.2
 --- !u!1 &1064424310373686454
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 1064424310373686452}
   - component: {fileID: 1064424310373686451}
   m_Layer: 12
-  m_Name: Bottom 1
+  m_Name: Bottom 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -353,7 +353,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.15, z: 0.1}
   m_Children: []
   m_Father: {fileID: 3300059109351561082}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1064424310373686449
 MeshFilter:
@@ -377,6 +377,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -426,8 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3c2c561afb4834ebb427e512199634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timing_Easy: 0.9
-  timing_Difficult: 0.8
+  timing: 0.8
 --- !u!1 &1064424311091787884
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,6 +484,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -533,8 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3c2c561afb4834ebb427e512199634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timing_Easy: 0.1
-  timing_Difficult: 0.2
+  timing: 0.1
 --- !u!1 &1464713280595917024
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 5719648840548712109}
   - component: {fileID: 8594984452187498907}
   m_Layer: 12
-  m_Name: 7
+  m_Name: Sweet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -591,6 +591,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -640,8 +641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3c2c561afb4834ebb427e512199634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timing_Easy: 0.8
-  timing_Difficult: 0.6
+  timing: 1
 --- !u!1 &3300059109351561081
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,9 +680,9 @@ Transform:
   - {fileID: 3029850888266289460}
   - {fileID: 6236993138931366060}
   - {fileID: 2529195104426803751}
+  - {fileID: 3300059110871748560}
   - {fileID: 1064424310373686453}
   - {fileID: 6055289952999908047}
-  - {fileID: 3300059110871748560}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -764,7 +764,7 @@ GameObject:
   - component: {fileID: 7316189598568813718}
   - component: {fileID: 1064424311184916065}
   m_Layer: 12
-  m_Name: Sweet Spot
+  m_Name: Bottom 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -782,7 +782,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.15, z: 0.1}
   m_Children: []
   m_Father: {fileID: 3300059109351561082}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3300059110871748561
 MeshFilter:
@@ -806,6 +806,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -855,8 +856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3c2c561afb4834ebb427e512199634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timing_Easy: 1
-  timing_Difficult: 1
+  timing: 0.9
 --- !u!1 &3300059111225289576
 GameObject:
   m_ObjectHideFlags: 0
@@ -911,6 +911,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -949,7 +950,7 @@ GameObject:
   - component: {fileID: 950458678098906738}
   - component: {fileID: 6698047859380735330}
   m_Layer: 12
-  m_Name: Bottom 2
+  m_Name: Bottom 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -967,7 +968,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.073033445, z: 0.1}
   m_Children: []
   m_Father: {fileID: 3300059109351561082}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5507765064266459950
 MeshFilter:
@@ -991,6 +992,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1040,8 +1042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3c2c561afb4834ebb427e512199634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timing_Easy: 0.7
-  timing_Difficult: 0.8
+  timing: 0.7
 --- !u!1 &4201803978984781690
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,6 +1099,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1147,8 +1149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3c2c561afb4834ebb427e512199634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timing_Easy: 0.5
-  timing_Difficult: 0.6
+  timing: 0.5
 --- !u!1 &8170585948919770732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1205,6 +1206,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1254,5 +1256,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3c2c561afb4834ebb427e512199634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timing_Easy: 0.4
-  timing_Difficult: 0.6
+  timing: 0.4

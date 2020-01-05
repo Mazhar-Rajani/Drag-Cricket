@@ -32,7 +32,7 @@ public class CameraShake : MonoBehaviour
         transform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
     }
 
-    private void ShakeCamera()
+    private void ShakeCamera(Vector3 hitPoint)
     {
         StartCoroutine(ShakeCameraCoroutine());
     }

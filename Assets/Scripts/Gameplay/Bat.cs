@@ -3,10 +3,7 @@ using UnityEngine;
 
 public class Bat : MonoBehaviour
 {
-    public static event System.Action OnShotPlayed;
-    public static event System.Action<Vector3> OnShotPlayed_Point;
-    public static event System.Action OnBoundaryScored;
-    public static event System.Action<int> OnRunsScored;
+    public static event System.Action<Vector3> OnShotPlayed;
 
     [SerializeField] private Vector3 centerOfMass = default;
     [SerializeField] private Collider dragCollider = default;
@@ -18,9 +15,9 @@ public class Bat : MonoBehaviour
     [SerializeField] private Camera mainCamera = default;
     [SerializeField] private Vector2 maxRotation = default;
     [SerializeField] private Vector2 dragSmoothness = default;
-    [SerializeField] private float ballMaxHeight = default;
+    [SerializeField] private float maxBallHeight = default;
+    [SerializeField] private float maxBallHitForce = default;
     [SerializeField] private float swingSpeed = default;
-    [SerializeField] private float ballHitForce = default;
 
     private Rigidbody rb;
     private Quaternion originalRotation;
@@ -40,6 +37,11 @@ public class Bat : MonoBehaviour
     private float startTime;
     private float xVelocity;
     private float yVelocity;
+    private float timing;
+    private float ballHeight;
+    private float ballHitForce;
+    private Vector3 direction;
+    private Vector3 force;
 
     public float DragDistance { get => dragDistance.magnitude; }
 
@@ -91,7 +93,7 @@ public class Bat : MonoBehaviour
 
         isPressed = true;
 
-        //StartCoroutine(ball.Throw(2));
+        ball.ThrowBall();
     }
 
     private void OnMouseDrag()
@@ -129,16 +131,13 @@ public class Bat : MonoBehaviour
         canSwing = true;
         isBatReleased = true;
         dragCollider.enabled = false;
-        StartCoroutine(ResetBat(5));
+        StartCoroutine(ResetBat(2));
     }
 
     private void SwingBat()
     {
         rb.MoveRotation(Quaternion.Lerp(
             transform.rotation, Quaternion.Euler(invertedRotation), Time.deltaTime * swingSpeed));
-
-        //rb.isKinematic = false;
-        //rb.AddTorque(-transform.right * swingSpeed, ForceMode.VelocityChange);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -155,23 +154,19 @@ public class Bat : MonoBehaviour
             }
 
             ballRigidbody.velocity = Vector3.zero;
-            float timing = collision.GetContact(0).thisCollider.GetComponent<ColliderStrength>().Timing_Easy;
+            timing = collision.GetContact(0).thisCollider.GetComponent<ColliderStrength>().Timing;
 
-            Debug.Log("M1.V1 Before - " + ballRigidbody.mass * ballVelocityBeforeHit);
-            Debug.Log("M2.V2 Before - " + rb.mass * batVelocityBeforeHit);
-            Debug.Log("M2.V2 After - " + rb.mass * rb.velocity);
-            Vector3 c = ((ballRigidbody.mass * ballVelocityBeforeHit) + (rb.mass * batVelocityBeforeHit) - (rb.mass * rb.velocity));
-            Debug.Log("C - " + c);
-            Vector3 hitForce = c / ballRigidbody.mass;
-            hitForce = new Vector3(hitForce.x, -hitForce.normalized.y * ((ballHitForce * timing)), -hitForce.normalized.z * ((ballHitForce * timing)));
-            //hitForce.y = Mathf.Clamp(hitForce.y, -ballMaxHeight, ballMaxHeight) * timing;
-            Debug.Log(transform.forward);
-            Debug.Log("Hit Force" + hitForce);
-            Debug.Log("Timing " + collision.GetContact(0).thisCollider.name + " - " + timing);
-            ballRigidbody.AddForce(-hitForce, ForceMode.Impulse);
+            OnShotPlayed?.Invoke(collision.GetContact(0).point);
 
-            OnShotPlayed?.Invoke();
-            OnShotPlayed_Point?.Invoke(collision.GetContact(0).point);
+            ballHeight = (-maxBallHeight * Mathf.Deg2Rad) * (dragRotation.normalized.magnitude * timing);
+            ballHitForce = maxBallHitForce * (dragRotation.normalized.magnitude * timing);
+            ballHitForce = Mathf.Clamp(ballHitForce, 0, maxBallHitForce);
+            direction = new Vector3(dragDistance.x, ballHeight, dragDistance.y);
+            force = ballHitForce * direction;
+            ball.canThrowBall = false;
+            ballRigidbody.useGravity = true;
+            ballRigidbody.isKinematic = false;
+            ballRigidbody.AddForce(-force, ForceMode.Impulse);
         }
     }
 

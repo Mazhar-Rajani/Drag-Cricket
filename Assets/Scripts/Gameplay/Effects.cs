@@ -8,13 +8,13 @@ public class Effects : MonoBehaviour
 
     private void OnEnable()
     {
-        Bat.OnShotPlayed_Point += PlayHitEffect;
+        Bat.OnShotPlayed += PlayHitEffect;
         Ball.OnBallReset += OnBallReset;
     }
 
     private void OnDisable()
     {
-        Bat.OnShotPlayed_Point -= PlayHitEffect;
+        Bat.OnShotPlayed -= PlayHitEffect;
         Ball.OnBallReset -= OnBallReset;
     }
 

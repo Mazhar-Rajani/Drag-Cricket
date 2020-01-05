@@ -13,7 +13,7 @@ public class Ball : MonoBehaviour
     private Rigidbody ballRigidbody;
     private Vector3 originalPosition;
     private Quaternion originalRotation;
-    private bool canThrowBall;
+    public bool canThrowBall;
     private float moveProgress;
     private float bounceProgress;
     private Vector3 ballPos;
@@ -39,6 +39,7 @@ public class Ball : MonoBehaviour
 
     public void ThrowBall()
     {
+        ResetThrow();
         canThrowBall = true;
         OnBallThrow?.Invoke();
     }
@@ -50,6 +51,7 @@ public class Ball : MonoBehaviour
         bounceProgress = 0;
         ballRigidbody.velocity = Vector3.zero;
         ballRigidbody.angularVelocity = Vector3.zero;
+        ballRigidbody.useGravity = false;
         OnThrowReset?.Invoke();
     }
 

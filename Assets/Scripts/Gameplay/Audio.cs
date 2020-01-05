@@ -8,16 +8,16 @@ public class Audio : MonoBehaviour
     private void OnEnable()
     {
         Bat.OnShotPlayed += PlayHitSound;
-        Bat.OnBoundaryScored += PlayCheerSound;
+        // Bat.OnBoundaryScored += PlayCheerSound;
     }
 
     private void OnDisable()
     {
         Bat.OnShotPlayed -= PlayHitSound;
-        Bat.OnBoundaryScored -= PlayCheerSound;
+        // Bat.OnBoundaryScored -= PlayCheerSound;
     }
 
-    private void PlayHitSound()
+    private void PlayHitSound(Vector3 hitPoint)
     {
         hitSound.Stop();
         hitSound.Play();

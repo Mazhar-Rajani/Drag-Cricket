@@ -49,7 +49,7 @@ public class CameraLook : MonoBehaviour
         transform.rotation = originalRotation;
     }
 
-    private void LookAtBall()
+    private void LookAtBall(Vector3 hitPoint)
     {
         StartCoroutine(LookAtBallCoroutine());
     }
