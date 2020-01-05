@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CameraRotate : MonoBehaviour
+public class Camera_MainMenu : MonoBehaviour
 {
     [SerializeField] private Camera mainMenuCamera = default;
     [SerializeField] private float rotateSpeed = default;

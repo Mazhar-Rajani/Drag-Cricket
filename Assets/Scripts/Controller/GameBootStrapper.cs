@@ -6,7 +6,9 @@ public class GameBootStrapper : MonoBehaviour
 
     private void Start()
     {
+#if UNITY_EDITOR
         Debug.Log("Game Start");
+#endif
         OnGameBootStrap?.Invoke();
     }
 }

@@ -8,6 +8,16 @@ public class Ads : MonoBehaviour
     [SerializeField] private string gameId = default;
     [SerializeField] private bool testMode = default;
 
+    private void OnEnable()
+    {
+        
+    }
+
+    private void OnDisable()
+    {
+        
+    }
+
     private void Start()
     {
         Monetization.Initialize(gameId, testMode);

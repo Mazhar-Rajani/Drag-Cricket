@@ -5,12 +5,16 @@ public class CameraLook : MonoBehaviour
 {
     [SerializeField] private Transform ball = default;
     [SerializeField] private float rotateSpeed = default;
+    [SerializeField] private Camera gameCamera = default;
+    [SerializeField] private float minFocalLength = default;
+    [SerializeField] private float maxFocalLength = default;
+    [SerializeField] private float zoomSpeed = default;
 
     private bool canFollowBall;
     private bool canResetCamera;
     private Quaternion originalRotation;
     float progress;
-    float angle;
+    float zoomProgress;
 
     private void Awake()
     {
@@ -19,13 +23,13 @@ public class CameraLook : MonoBehaviour
 
     private void OnEnable()
     {
-        Bat.OnShotPlayed += LookAtBall;
+        Bat.OnShotPlayed += FollowBall;
         Ball.OnBallReset += ResetCamera;
     }
 
     private void OnDisable()
     {
-        Bat.OnShotPlayed -= LookAtBall;
+        Bat.OnShotPlayed -= FollowBall;
         Ball.OnBallReset -= ResetCamera;
     }
 
@@ -33,38 +37,43 @@ public class CameraLook : MonoBehaviour
     {
         if (canFollowBall)
         {
+            progress += rotateSpeed * Time.deltaTime;
+            progress = Mathf.Clamp01(progress);
             Vector3 distance = ball.position - transform.position;
             Quaternion lookRotation = Quaternion.LookRotation(distance, Vector3.up);
-            progress = rotateSpeed * Time.deltaTime;
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, progress);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(transform.eulerAngles.x, lookRotation.eulerAngles.y, transform.eulerAngles.z), progress);
+
+            zoomProgress += zoomSpeed * Time.deltaTime;
+            zoomProgress = Mathf.Clamp01(zoomProgress);
+            gameCamera.focalLength = Mathf.Lerp(minFocalLength, maxFocalLength, zoomProgress);
         }
         if (canResetCamera)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, originalRotation, (rotateSpeed * 2) * Time.deltaTime);
+            progress += rotateSpeed * Time.deltaTime;
+            progress = Mathf.Clamp01(progress);
+            transform.rotation = Quaternion.Slerp(transform.rotation, originalRotation, progress);
+
+            zoomProgress += zoomSpeed * Time.deltaTime;
+            zoomProgress = Mathf.Clamp01(zoomProgress);
+
+            if (gameCamera.focalLength != minFocalLength)
+                gameCamera.focalLength = Mathf.Lerp(maxFocalLength, minFocalLength, zoomProgress);
         }
     }
 
     private void ResetCamera()
     {
-        transform.rotation = originalRotation;
-    }
-
-    private void LookAtBall(Vector3 hitPoint)
-    {
-        StartCoroutine(LookAtBallCoroutine());
-    }
-
-    private IEnumerator LookAtBallCoroutine()
-    {
-        angle = Vector3.Dot(transform.forward, ball.forward) * Mathf.Rad2Deg;
-
         progress = 0;
-        canFollowBall = true;
-        yield return new WaitForSeconds(1f);
+        zoomProgress = 0;
         canFollowBall = false;
-        yield return new WaitForSeconds(1f);
         canResetCamera = true;
-        yield return new WaitForSeconds(1);
+    }
+
+    private void FollowBall(Vector3 hitPoint)
+    {
+        progress = 0;
+        zoomProgress = 0;
         canResetCamera = false;
+        canFollowBall = true;
     }
 }
