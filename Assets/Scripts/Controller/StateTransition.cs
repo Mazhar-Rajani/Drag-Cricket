@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MenuToGame : MonoBehaviour
+public class StateTransition : MonoBehaviour
 {
     [SerializeField] private GameObject[] props = default;
 
